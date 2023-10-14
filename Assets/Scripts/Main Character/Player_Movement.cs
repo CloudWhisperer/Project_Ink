@@ -16,6 +16,9 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private LayerMask Ground_layer;
     [SerializeField] private Animator _animator;
 
+    //audio
+    [SerializeField] private AudioSource jump;
+
 
     // Update is called once per frame
     void Update()
@@ -32,6 +35,7 @@ public class Player_Movement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && is_grounded())
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jump_power);
+            jumpsfx();
         }
 
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
@@ -60,5 +64,13 @@ public class Player_Movement : MonoBehaviour
     private bool is_grounded()
     {
         return Physics2D.OverlapCircle(ground_check_object.position, 0.4f, Ground_layer);
+    }
+
+    public void jumpsfx()
+    {
+        if (jump.isPlaying == false)
+        {
+            jump.Play();
+        }
     }
 }
